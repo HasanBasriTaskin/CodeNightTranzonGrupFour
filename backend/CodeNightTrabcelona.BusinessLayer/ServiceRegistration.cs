@@ -30,6 +30,7 @@ namespace CodeNightTrabcelona.BusinessLayer
             services.AddScoped<IBadgeService, BadgeManager>();
             services.AddScoped<IGreenTokenService, GreenTokenManager>();
             services.AddScoped<IUserGoalService, UserGoalManager>();
+            services.AddScoped<IDataImportService, DataImportManager>();
         }
     }
 }
