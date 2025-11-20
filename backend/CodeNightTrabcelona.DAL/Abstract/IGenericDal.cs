@@ -1,3 +1,4 @@
+using CodeNightTrabcelona.EntityLayer.Commons;
 using System.Linq.Expressions;
 
 namespace CodeNightTrabcelona.DAL.Abstract
@@ -22,5 +23,8 @@ namespace CodeNightTrabcelona.DAL.Abstract
         
         T GetByFilter(Expression<Func<T, bool>> filter);
         Task<T> GetByFilterAsync(Expression<Func<T, bool>> filter);
+
+        // Pagination
+        Task<PagedResult<T>> GetListPagedAsync(int page, int pageSize, Expression<Func<T, bool>> filter = null);
     }
 }

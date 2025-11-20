@@ -1,0 +1,50 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - main  # Sadece main'e kod gelince çalışır
+    paths:
+      - 'backend/**' # Sadece backend klasöründe değişiklik varsa çalışır
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Kodları çek
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. .NET 8 Kurulumu yap
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    # 3. Projeyi Derle (Publish)
+    - name: Publish Backend
+      run: |
+        cd backend
+        dotnet publish -c Release -o ../publish_output
+
+    # 4. Dosyaları Sunucuya Kopyala
+    - name: Copy files via SSH
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        source: "publish_output/*"
+        target: "/var/www/codenight"
+        strip_components: 1 # Klasörün kendisini değil içindekileri atar
+
+    # 5. Servisi Yeniden Başlat
+    - name: Restart Service
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: |
+          sudo systemctl restart codenight.service
