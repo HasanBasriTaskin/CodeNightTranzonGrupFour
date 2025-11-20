@@ -81,7 +81,7 @@ namespace CodeNightTrabcelona.BusinessLayer.Concrete
             var user = await _unitOfWork.Users.GetByIDAsync(userId);
             if (user != null)
             {
-                user.WeeklyGoal = userGoal.CalculatedWeeklyCarbonGoal;
+                user.WeeklyGoalCarbon = userGoal.CalculatedWeeklyCarbonGoal;
                 _unitOfWork.Users.Update(user);
             }
 

@@ -15,7 +15,7 @@ namespace CodeNightTrabcelona.DAL.Concrete
         {
             return await _context.Badges
                 .Where(x => x.UserId == userId)
-                .OrderByDescending(x => x.EarnedDate)
+                .OrderByDescending(x => x.AwardedAt)
                 .ToListAsync();
         }
 

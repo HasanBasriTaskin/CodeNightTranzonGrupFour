@@ -81,9 +81,9 @@ namespace CodeNightTrabcelona.BusinessLayer.Concrete
             user.PasswordHash = HashingHelper.CreatePasswordHash(registerDto.Password);
             
             // Varsayılan değerler
-            user.CurrentBalance = 0;
+            user.GreenTokenBalance = 0;
             user.EcoLevel = EntityLayer.Enums.EcoLevel.GreenHero; // Başlangıç seviyesi (veya null)
-            user.WeeklyGoal = 0; // Kullanıcı sonra belirleyecek
+            user.WeeklyGoalCarbon = 0; // Kullanıcı sonra belirleyecek
 
             // 4. Save
             await _unitOfWork.Users.InsertAsync(user);

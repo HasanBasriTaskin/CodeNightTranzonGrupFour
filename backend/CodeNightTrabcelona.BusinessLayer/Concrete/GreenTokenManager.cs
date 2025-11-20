@@ -60,7 +60,7 @@ namespace CodeNightTrabcelona.BusinessLayer.Concrete
             var user = await _unitOfWork.Users.GetByIDAsync(userId);
             if (user != null)
             {
-                user.CurrentBalance = (int)(currentBalance - amount);
+                user.GreenTokenBalance = (int)(currentBalance - amount);
                 _unitOfWork.Users.Update(user);
             }
 

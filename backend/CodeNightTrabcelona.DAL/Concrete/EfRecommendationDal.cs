@@ -15,7 +15,7 @@ namespace CodeNightTrabcelona.DAL.Concrete
         {
             return await _context.Recommendations
                 .Where(x => x.UserId == userId)
-                .OrderByDescending(x => x.CreatedAt)
+                .OrderByDescending(x => x.CreatedDate)
                 .ToListAsync();
         }
 
@@ -23,7 +23,7 @@ namespace CodeNightTrabcelona.DAL.Concrete
         {
             var query = _context.Recommendations
                 .Where(x => x.UserId == userId)
-                .OrderByDescending(x => x.CreatedAt);
+                .OrderByDescending(x => x.CreatedDate);
 
             var count = await query.CountAsync();
             var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();

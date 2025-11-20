@@ -6,11 +6,11 @@ namespace CodeNightTrabcelona.BusinessLayer.DTOs.UserDtos
     {
         public string FullName { get; set; }
         public EcoLevel EcoLevel { get; set; }
-        public int CurrentBalance { get; set; }
+        public int GreenTokenBalance { get; set; }
         
         // Hedef İlerleme Durumu
         public decimal CurrentCarbonUsage { get; set; }
-        public decimal WeeklyGoal { get; set; }
+        public decimal WeeklyGoalCarbon { get; set; }
         public int GoalProgressPercentage { get; set; } // %60 doldu gibi
 
         // Öneriler

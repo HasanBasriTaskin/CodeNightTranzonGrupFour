@@ -35,12 +35,12 @@ namespace CodeNightTrabcelona.BusinessLayer.Concrete
             var currentUsage = weeklyUsages.Sum(x => x.TotalCarbonEmission);
 
             dashboardDto.CurrentCarbonUsage = currentUsage;
-            dashboardDto.WeeklyGoal = user.WeeklyGoal;
+            dashboardDto.WeeklyGoalCarbon = user.WeeklyGoalCarbon;
 
             // İlerleme Yüzdesi
-            if (user.WeeklyGoal > 0)
+            if (user.WeeklyGoalCarbon > 0)
             {
-                var percentage = (int)((currentUsage / user.WeeklyGoal) * 100);
+                var percentage = (int)((currentUsage / user.WeeklyGoalCarbon) * 100);
                 dashboardDto.GoalProgressPercentage = percentage > 100 ? 100 : percentage;
             }
             else
@@ -50,7 +50,7 @@ namespace CodeNightTrabcelona.BusinessLayer.Concrete
 
             // Aktif Öneriler (Son 3 tane)
             dashboardDto.ActiveRecommendations = user.Recommendations
-                .OrderByDescending(r => r.CreatedAt)
+                .OrderByDescending(r => r.CreatedDate)
                 .Take(3)
                 .Select(r => r.Message)
                 .ToList();
