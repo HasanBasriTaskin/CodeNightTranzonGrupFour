@@ -24,6 +24,32 @@ const MOCK_LEADERBOARD = {
   ]
 };
 
+// Get mock users from localStorage
+const getMockUsers = () => {
+  if (typeof window === 'undefined') return [];
+  try {
+    return JSON.parse(localStorage.getItem('mock_users') || '[]');
+  } catch {
+    return [];
+  }
+};
+
+// Save mock users to localStorage
+const saveMockUsers = (users) => {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('mock_users', JSON.stringify(users));
+    } catch (error) {
+      console.error('Failed to save mock users:', error);
+    }
+  }
+};
+
+// Generate mock token
+const generateMockToken = () => {
+  return 'mock_token_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+};
+
 // Helper function to check if error is connection refused
 const isConnectionError = (error) => {
   return error?.message?.includes('fetch') || 
@@ -94,6 +120,108 @@ export const api = {
       if (isConnectionError(error)) {
         console.warn('Backend bağlantı hatası, mock data kullanılıyor:', error.message);
         return MOCK_LEADERBOARD;
+      }
+      throw error;
+    }
+  },
+
+  async login(email, password) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.message || 'Giriş başarısız');
+      }
+      return response.json();
+    } catch (error) {
+      if (isConnectionError(error)) {
+        console.warn('Backend bağlantı hatası, mock login kullanılıyor:', error.message);
+        // Mock login logic
+        const users = getMockUsers();
+        const user = users.find(u => u.email === email && u.password === password);
+        
+        if (!user) {
+          throw new Error('E-posta veya şifre hatalı');
+        }
+
+        const token = generateMockToken();
+        const userData = {
+          token,
+          user: {
+            id: user.id,
+            email: user.email,
+            name: user.name || email.split('@')[0],
+          }
+        };
+
+        // Save token to localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('auth_token', token);
+          localStorage.setItem('user_data', JSON.stringify(userData.user));
+        }
+
+        return userData;
+      }
+      throw error;
+    }
+  },
+
+  async register(email, password) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.message || 'Kayıt başarısız');
+      }
+      return response.json();
+    } catch (error) {
+      if (isConnectionError(error)) {
+        console.warn('Backend bağlantı hatası, mock register kullanılıyor:', error.message);
+        // Mock register logic
+        const users = getMockUsers();
+        
+        // Check if user already exists
+        if (users.find(u => u.email === email)) {
+          throw new Error('Bu e-posta adresi zaten kayıtlı');
+        }
+
+        // Create new user
+        const newUser = {
+          id: users.length + 1,
+          email,
+          password, // In real app, this should be hashed
+          name: email.split('@')[0],
+          createdAt: new Date().toISOString(),
+        };
+
+        users.push(newUser);
+        saveMockUsers(users);
+
+        const token = generateMockToken();
+        const userData = {
+          token,
+          user: {
+            id: newUser.id,
+            email: newUser.email,
+            name: newUser.name,
+          }
+        };
+
+        // Save token to localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('auth_token', token);
+          localStorage.setItem('user_data', JSON.stringify(userData.user));
+        }
+
+        return userData;
       }
       throw error;
     }
