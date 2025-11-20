@@ -1,36 +1,164 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# GreenConnect - Yeşil Yaşam Takip Sistemi
 
-## Getting Started
+Turkcell GreenConnect projesi - Karbon ayak izinizi takip edin, yeşil yaşam hedeflerinize ulaşın.
 
-First, run the development server:
+## 🚀 Kurulum
+
+### Gereksinimler
+
+- Node.js 18+ 
+- npm, yarn, pnpm veya bun
+
+### Adım 1: Projeyi Klonlayın
+
+```bash
+git clone <repository-url>
+cd frontend
+```
+
+### Adım 2: Bağımlılıkları Yükleyin
+
+```bash
+npm install
+# veya
+yarn install
+# veya
+pnpm install
+```
+
+### Adım 3: Environment Variables
+
+`.env.local` dosyası oluşturun:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5247/api
+```
+
+### Adım 4: Development Server'ı Başlatın
 
 ```bash
 npm run dev
-# or
+# veya
 yarn dev
-# or
+# veya
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açın.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📦 Proje Yapısı
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+frontend/
+├── app/                    # Next.js App Router
+│   ├── layout.js          # Root layout
+│   ├── page.js            # Ana sayfa (Dashboard)
+│   ├── leaderboard/       # Liderlik tablosu
+│   └── globals.css        # Global stiller
+├── components/            # React bileşenleri
+│   ├── ui/               # shadcn/ui bileşenleri
+│   └── dashboard/        # Dashboard bileşenleri
+├── lib/                   # Utility fonksiyonları
+│   ├── api.js           # API client
+│   └── utils.js         # Yardımcı fonksiyonlar
+├── components.json       # shadcn/ui config
+├── tailwind.config.js    # Tailwind CSS config
+└── package.json
+```
 
-## Learn More
+## 🎨 UI Bileşenleri
 
-To learn more about Next.js, take a look at the following resources:
+Bu proje [shadcn/ui](https://ui.shadcn.com/) kullanmaktadır. Kurulu bileşenler:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- ✅ **button** - Buton bileşeni
+- ✅ **card** - Kart bileşeni
+- ✅ **input** - Input alanı
+- ✅ **progress** - İlerleme çubuğu
+- ✅ **table** - Tablo bileşeni
+- ✅ **dialog** - Modal/Dialog bileşeni
+- ✅ **toast** - Bildirim bileşeni (sonner)
+- ✅ **badge** - Rozet bileşeni
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Yeni Bileşen Ekleme
 
-## Deploy on Vercel
+```bash
+npx shadcn-ui@latest add [component-name]
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 Tailwind CSS Konfigürasyonu
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proje Turkcell yeşil renklerini kullanmaktadır:
+
+- **Primary Color:** `#059669` (Turkcell Yeşil)
+- **Secondary Color:** `#86efac` (Açık Yeşil)
+
+Renkler `tailwind.config.js` dosyasında tanımlıdır ve `primary` class'ı ile kullanılabilir:
+
+```jsx
+<button className="bg-primary text-primary-foreground">
+  Yeşil Buton
+</button>
+```
+
+## 📚 Kullanılan Teknolojiler
+
+- **Next.js 16** - React framework
+- **React 19** - UI library
+- **Tailwind CSS 4** - CSS framework
+- **shadcn/ui** - UI component library
+- **Radix UI** - Headless UI components
+- **TanStack Query** - Data fetching
+- **Framer Motion** - Animations
+- **React Hook Form** - Form management
+- **Zod** - Schema validation
+- **Sonner** - Toast notifications
+
+## 🔌 API Entegrasyonu
+
+API endpoint'leri `lib/api.js` dosyasında tanımlıdır. Detaylı dokümantasyon için [API_ENDPOINTS.md](./API_ENDPOINTS.md) dosyasına bakın.
+
+### Mock Data
+
+Backend çalışmıyorsa, tüm API çağrıları otomatik olarak mock data döndürür. Bu sayede frontend development backend'e bağımlı olmadan yapılabilir.
+
+## 🛠️ Geliştirme
+
+### Build
+
+```bash
+npm run build
+```
+
+### Production
+
+```bash
+npm run start
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## 📝 Önemli Notlar
+
+1. **shadcn/ui Kurulumu:** Proje zaten kurulu, ancak yeni bileşen eklemek için `npx shadcn-ui@latest add [component]` komutunu kullanın.
+
+2. **Tailwind Config:** Turkcell yeşil renkleri (`#059669`) `tailwind.config.js` dosyasında `primary` color olarak tanımlıdır.
+
+3. **Path Aliases:** `@/` alias'ı proje root'una işaret eder (`jsconfig.json`).
+
+4. **API Base URL:** Environment variable `NEXT_PUBLIC_API_URL` ile değiştirilebilir.
+
+## 🤝 Katkıda Bulunma
+
+1. Projeyi fork edin
+2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
+3. Değişikliklerinizi commit edin (`git commit -m 'Add amazing feature'`)
+4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
+5. Pull Request oluşturun
+
+## 📄 Lisans
+
+Bu proje CodeNight etkinliği kapsamında geliştirilmiştir.
