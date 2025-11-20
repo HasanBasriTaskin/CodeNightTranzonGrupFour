@@ -516,7 +516,15 @@ FodyWeavers.xsd
 # Local History for Visual Studio Code
 .history/
 
+# 1. Tüm hassas ayar dosyalarını yoksay
+backend/appsettings.json
+backend/appsettings.Development.json
+backend/appsettings.Production.json
 
+# Environment dosyaları
+# 1. Tüm .env ile başlayan dosyaları yoksay (.env, .env.local, .env.production vb.)
+frontend/.env
+frontend/.env.*
 
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node,VisualStudio,VisualStudioCode,c#,cursor,kiro

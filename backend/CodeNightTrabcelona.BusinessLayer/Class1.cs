@@ -1,4 +1,4 @@
-﻿namespace CodeNightTrabcelona.BusinessLayer
+namespace CodeNightTrabcelona.BusinessLayer
 {
     public class Class1
     {
