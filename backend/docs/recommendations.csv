@@ -1,0 +1,4 @@
+rec_id,user_id,category,message,impact_g_co2
+R1,U1,Internet,Veri kullanımını 1GB azaltarak 55g CO₂ tasarruf edebilirsin.,55
+R2,U2,Music,"Fizy ses kalitesini düşür, 24g CO₂ daha az üret.",24
+R3,U3,Game+,"Oyun süreni 1 saat azalt, 75g CO₂ düşer.",75
