@@ -14,4 +14,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CodeNightTrabcelona.BusinessLayer\CodeNightTrabcelona.BusinessLayer.csproj" />
+    <ProjectReference Include="..\CodeNightTrabcelona.DAL\CodeNightTrabcelona.DAL.csproj" />
+    <ProjectReference Include="..\CodeNightTrabcelona.EntityLayer\CodeNightTrabcelona.EntityLayer.csproj" />
+  </ItemGroup>
+
 </Project>

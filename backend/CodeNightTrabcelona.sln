@@ -12,9 +12,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeNightTrabcelona.EntityLayer", "CodeNightTrabcelona.EntityLayer\CodeNightTrabcelona.EntityLayer.csproj", "{81B3B5A6-85E2-4A9F-9287-71DFD7FF5091}"
 EndProject
 Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{611300FE-6D0F-456C-9021-CD7C2A28A3A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
