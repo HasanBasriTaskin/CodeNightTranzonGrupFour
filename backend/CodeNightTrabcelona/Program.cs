@@ -1,3 +1,4 @@
+using CodeNightTrabcelona.DAL.Abstract;
 using CodeNightTrabcelona.DAL.Concrete;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<CodeNightConnectContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
