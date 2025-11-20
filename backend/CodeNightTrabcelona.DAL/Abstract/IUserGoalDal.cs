@@ -4,5 +4,6 @@ namespace CodeNightTrabcelona.DAL.Abstract
 {
     public interface IUserGoalDal : IGenericDal<UserGoal>
     {
+        Task<UserGoal> GetGoalByUserIdAsync(Guid userId);
     }
 }

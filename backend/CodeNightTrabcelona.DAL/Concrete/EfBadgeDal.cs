@@ -1,5 +1,6 @@
 using CodeNightTrabcelona.DAL.Abstract;
 using CodeNightTrabcelona.EntityLayer.Concrete;
+using CodeNightTrabcelona.EntityLayer.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeNightTrabcelona.DAL.Concrete
@@ -14,8 +15,14 @@ namespace CodeNightTrabcelona.DAL.Concrete
         {
             return await _context.Badges
                 .Where(x => x.UserId == userId)
-                .OrderByDescending(x => x.EarnedDate)
+                .OrderByDescending(x => x.AwardedAt)
                 .ToListAsync();
+        }
+
+        public async Task<bool> HasBadgeAsync(Guid userId, BadgeType badgeType, EcoLevel level)
+        {
+            return await _context.Badges
+                .AnyAsync(x => x.UserId == userId && x.BadgeType == badgeType && x.Level == level);
         }
     }
 }
