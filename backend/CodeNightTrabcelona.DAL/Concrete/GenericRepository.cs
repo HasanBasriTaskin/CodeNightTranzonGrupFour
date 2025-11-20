@@ -1,5 +1,5 @@
 using CodeNightTrabcelona.DAL.Abstract;
-using CodeNightTrabcelona.DAL.Concrete;
+using CodeNightTrabcelona.EntityLayer.Commons;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -57,6 +57,21 @@ namespace CodeNightTrabcelona.DAL.Concrete
         public async Task<List<T>> GetListByFilterAsync(Expression<Func<T, bool>> filter)
         {
             return await _context.Set<T>().Where(filter).ToListAsync();
+        }
+
+        public async Task<PagedResult<T>> GetListPagedAsync(int page, int pageSize, Expression<Func<T, bool>> filter = null)
+        {
+            var query = _context.Set<T>().AsQueryable();
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            var count = await query.CountAsync();
+            var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            return new PagedResult<T>(items, count, page, pageSize);
         }
 
         public void Insert(T t)
