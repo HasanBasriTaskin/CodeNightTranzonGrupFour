@@ -15,6 +15,9 @@ namespace CodeNightTrabcelona.BusinessLayer
             // AutoMapper
             services.AddAutoMapper(typeof(MappingProfile));
 
+            // HTTP Client
+            services.AddHttpClient();
+
             // FluentValidation
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
@@ -31,6 +34,7 @@ namespace CodeNightTrabcelona.BusinessLayer
             services.AddScoped<IGreenTokenService, GreenTokenManager>();
             services.AddScoped<IUserGoalService, UserGoalManager>();
             services.AddScoped<IDataImportService, DataImportManager>();
+            services.AddScoped<IAiService, AiManager>();
         }
     }
 }
