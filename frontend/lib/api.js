@@ -102,7 +102,17 @@ export const api = {
     } catch (error) {
       if (isConnectionError(error)) {
         console.warn('Backend bağlantı hatası, mock response döndürülüyor:', error.message);
-        return { tokens: 0, message: 'Backend bağlantısı yok, mock response' };
+        // Check if goal is completed by fetching user summary
+        try {
+          const summary = await this.getUserSummary(userId);
+          if (summary.goalProgress >= 100) {
+            return { tokens: 10, message: 'Jeton başarıyla alındı' };
+          } else {
+            return { tokens: 0, message: 'Hedefinize henüz ulaşmadınız' };
+          }
+        } catch {
+          return { tokens: 0, message: 'Hedefinize henüz ulaşmadınız' };
+        }
       }
       throw error;
     }
@@ -222,6 +232,27 @@ export const api = {
         }
 
         return userData;
+      }
+      throw error;
+    }
+  },
+
+  async getUserData(userId) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/${userId}/data`);
+      if (!response.ok) throw new Error('Failed to fetch user data');
+      return response.json();
+    } catch (error) {
+      if (isConnectionError(error)) {
+        console.warn('Backend bağlantı hatası, mock user data kullanılıyor:', error.message);
+        // Mock user data with internet_gb and other fields
+        return {
+          internet_gb: 15,
+          electricity_kwh: 120,
+          transportation_km: 50,
+          water_liters: 200,
+          // Add other fields as needed
+        };
       }
       throw error;
     }
