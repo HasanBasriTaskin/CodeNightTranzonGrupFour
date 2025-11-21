@@ -2,6 +2,7 @@ using CodeNightTrabcelona.BusinessLayer;
 using CodeNightTrabcelona.BusinessLayer.Security;
 using CodeNightTrabcelona.DAL.Abstract;
 using CodeNightTrabcelona.DAL.Concrete;
+using CodeNightTrabcelona.DAL.DataSeed;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<CodeNightConnectContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<DataSeeder>(); // Register Seeder
 
 // Business Layer Registration (Services, Validations, Mapper)
 builder.Services.AddBusinessServices();
@@ -54,6 +56,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    // Data Seeding
+    using (var scope = app.Services.CreateScope())
+    {
+        var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+        await seeder.SeedAsync();
+    }
 }
 
 app.UseHttpsRedirection();
