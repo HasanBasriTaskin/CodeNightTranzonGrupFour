@@ -12,10 +12,9 @@ export function Header() {
 
   const navItems = [
     { href: '/dashboard', label: 'Ana Sayfa' },
-    { href: '/dashboard/impact', label: 'Etkim' },
     { href: '/dashboard/league', label: 'Lig Sistemi' },
-    { href: '/dashboard/challenges', label: 'Meydan Okumalar' },
-    { href: '/dashboard/settings', label: 'Ayarlar' },
+    { href: '/dashboard/goals', label: 'Hedefler' },
+    { href: '/dashboard/recommendations', label: 'Öneriler' },
   ]
 
   return (
